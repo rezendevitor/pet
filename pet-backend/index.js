@@ -72,6 +72,20 @@ app.get('/petprofile/:id', (req, res) => {
       });
   });
   
+// Rota para atualizar um pet
+app.put('/petprofile/:id', (req, res) => {
+  const petId = req.params.id;
+
+  Pet.findByIdAndUpdate(petId, req.body, { new: true })
+    .then(pet => {
+      if (!pet) {
+        return res.status(404).json({ message: 'Pet não encontrado' });
+      }
+      res.status(200).json({ message: 'Pet atualizado com sucesso', pet });
+    })
+    .catch(err => res.status(500).json({ message: 'Erro ao atualizar pet', error: err }));
+});
+
 // Fetch all pets
 app.get('/petform', async (req, res) => {
     try {

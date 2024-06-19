@@ -19,5 +19,5 @@ Este é um projeto de perfil de pets que permite cadastrar e visualizar perfis d
 ### Clonar o repositório
 
 ```sh
-git clone https://github.com/seu-usuario/pet-profile.git
-cd pet-profile
+git clone https://github.com/rezendevitor/pet.git
+cd pet

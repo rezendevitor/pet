@@ -1,23 +1,27 @@
 <template>
-  <div class="pet-form">
-    <h2>Cadastro de Pet</h2>
+  <div class="form-container">
     <form @submit.prevent="submitForm">
-      <label for="name">Nome:</label>
-      <input type="text" id="name" v-model="pet.name" required>
-
-      <label for="age">Idade:</label>
-      <input type="number" id="age" v-model.number="pet.age" required>
-
-      <label for="description">Descrição:</label>
-      <textarea id="description" v-model="pet.description" required></textarea>
-
-      <label for="breed">Raça:</label>
-      <input type="text" id="breed" v-model="pet.breed" required>
-
-      <label for="photoUrl">URL da Foto:</label>
-      <input type="url" id="photoUrl" v-model="pet.photoUrl" required>
-
-      <button type="submit">Enviar</button>
+      <div class="form-group">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" v-model="formPet.name" required />
+      </div>
+      <div class="form-group">
+        <label for="breed">Raça:</label>
+        <input type="text" id="breed" v-model="formPet.breed" required />
+      </div>
+      <div class="form-group">
+        <label for="age">Idade:</label>
+        <input type="number" id="age" v-model="formPet.age" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Descrição:</label>
+        <textarea id="description" v-model="formPet.description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="photoUrl">URL da Foto:</label>
+        <input type="text" id="photoUrl" v-model="formPet.photoUrl" required />
+      </div>
+      <button type="submit" class="submit-btn">{{ isEdit ? 'Salvar Alterações' : 'Cadastrar Pet' }}</button>
     </form>
   </div>
 </template>
@@ -26,76 +30,110 @@
 import axios from 'axios';
 
 export default {
+  name: 'PetForm',
+  props: {
+    pet: {
+      type: Object,
+      default: () => ({
+        name: '',
+        breed: '',
+        age: '',
+        description: '',
+        photoUrl: ''
+      })
+    }
+  },
   data() {
     return {
-      pet: {
-        name: '',
-        age: 0,
-        description: '',
-        breed: '',
-        photoUrl: ''
-      }
+      formPet: { ...this.pet },
+      isEdit: !!this.pet._id
     };
   },
   methods: {
     submitForm() {
-      axios.post('http://localhost:3000/petform', this.pet)
-  .then(response => {
-    console.log('Pet cadastrado com sucesso:', response.data);
-    const petId = response.data.pet._id; // Assumindo que o id do pet está em _id
-    this.$router.push({ name: 'PetProfile', params: { id: petId } });
-  })
-  .catch(error => {
-    console.error('Erro ao cadastrar pet:', error);
-  });
+      if (this.isEdit) {
+        this.$emit('update-pet', this.formPet);
+      } else {
+        axios.post('http://localhost:3000/petform', this.formPet)
+          .then(response => {
+            console.log('Pet cadastrado com sucesso:', response.data);
+            this.$router.push({ name: 'PetProfile', params: { id: response.data.pet._id } });
+          })
+          .catch(error => {
+            console.error('Erro ao cadastrar pet:', error);
+          });
+      }
     }
   }
 };
 </script>
 
-
 <style scoped>
-.pet-form {
-  max-width: 400px;
-  margin: 0 auto;
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
 }
 
-.pet-form h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.pet-form form {
+form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-.pet-form label {
-  margin-bottom: 8px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
 }
 
-.pet-form input,
-.pet-form textarea {
-  padding: 8px;
-  margin-bottom: 16px;
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+input,
+textarea {
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.pet-form button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+input:focus,
+textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit-btn {
+  padding: 15px;
+  font-size: 18px;
+  background-color: #007BFF;
+  color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.pet-form button:hover {
+.submit-btn:hover {
   background-color: #0056b3;
 }
 </style>

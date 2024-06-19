@@ -1,48 +1,81 @@
 <template>
-    <div class="home">
-      <h2>Homepage</h2>
-      <p>Escolha uma opção:</p>
-      <router-link to="/petform">Cadastre seu Pet</router-link>
-      <router-link to="/petlist">Ver Perfis de Pet</router-link>
+  <div class="home">
+    <h1 class="title">Bem-vindo à Página Inicial</h1>
+    <p class="subtitle">Escolha uma opção:</p>
+    <div class="options">
+      <router-link to="/petform" class="option-link">
+        <button class="option-button">
+          <i class="fas fa-paw"></i> Cadastre seu Pet
+        </button>
+      </router-link>
+      <router-link to="/petlist" class="option-link">
+        <button class="option-button">
+          <i class="fas fa-list"></i> Ver Perfis de Pet
+        </button>
+      </router-link>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'HomePage',
-  };
-  </script>
-  
-  <style scoped>
-  .home {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  p {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  router-link {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 8px;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  router-link:hover {
-    text-decoration: underline;
-  }
-  </style>
-  
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HomePage',
+};
+</script>
+
+<style scoped>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+.home {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.option-link {
+  text-decoration: none;
+}
+
+.option-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.option-button i {
+  margin-right: 10px;
+}
+
+.option-button:hover {
+  background-color: #0056b3;
+}
+</style>
