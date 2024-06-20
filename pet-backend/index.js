@@ -86,16 +86,16 @@ app.put('/petprofile/:id', (req, res) => {
     .catch(err => res.status(500).json({ message: 'Erro ao atualizar pet', error: err }));
 });
 
-// Fetch all pets
-app.get('/petform', async (req, res) => {
-    try {
-      const pets = await Pet.find({});
-      res.json(pets);
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
-  
+
+// Rota para obter todos os pets
+app.get('/pets', async (req, res) => {
+  try {
+    const pets = await Pet.find({});
+    res.json(pets);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 // Start Server
 app.listen(PORT, () => {

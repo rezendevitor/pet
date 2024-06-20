@@ -1,3 +1,5 @@
+ <!-- Essa página será o feed -->
+
 <template>
   <div class="home">
     <h1 class="title">Bem-vindo à Página Inicial</h1>
@@ -8,7 +10,7 @@
           <i class="fas fa-paw"></i> Cadastre seu Pet
         </button>
       </router-link>
-      <router-link to="/petlist" class="option-link">
+      <router-link to="/pets" class="option-link">
         <button class="option-button">
           <i class="fas fa-list"></i> Ver Perfis de Pet
         </button>

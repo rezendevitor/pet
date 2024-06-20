@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios';
-import PetForm from './PetForm.vue';
+import PetForm from '../components/PetForm.vue';
 
 export default {
   name: 'PetProfile',

@@ -1,7 +1,15 @@
-// main.js
-
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 
-createApp(App).use(router).mount('#app');
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+
+const app = createApp(App);
+
+app.use(router);
+
+app.use(VueToast);
+
+app.mount('#app');

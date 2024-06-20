@@ -56,11 +56,12 @@ export default {
       } else {
         axios.post('http://localhost:3000/petform', this.formPet)
           .then(response => {
-            console.log('Pet cadastrado com sucesso:', response.data);
+            this.$toast.success('Pet cadastrado com sucesso:', response.data);
             this.$router.push({ name: 'PetProfile', params: { id: response.data.pet._id } });
           })
           .catch(error => {
             console.error('Erro ao cadastrar pet:', error);
+            this.$toast.error('Erro ao realizar operação.');
           });
       }
     }

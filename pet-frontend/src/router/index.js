@@ -1,31 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
-import PetForm from '../views/PetForm.vue';
-import PetProfile from '../views/PetProfile.vue';
-import PetList from '../views/PetList.vue';
+import Home from '@/views/Home.vue';
+import PetForm from '@/components/PetForm.vue';
+import PetsList from '@/components/PetsList.vue';
+import PetProfile from '@/components/PetProfile.vue';
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/petform',
-    name: 'PetForm',
-    component: PetForm
-  },
-  {
-    path: '/petprofile/:id',
-    name: 'PetProfile',
-    component: PetProfile,
-    props: true // Permitir que o parâmetro id seja passado como prop
-  },
-  {
-    path: '/petlist',
-    name: 'PetList',
-    component: PetList
-  }
+  { path: '/', component: Home },
+  { path: '/petform', component: PetForm },
+  { path: '/pets', component: PetsList },
+  { path: '/petprofile/:id', name: 'PetProfile', component: PetProfile, props: true }
 ];
 
 const router = createRouter({
