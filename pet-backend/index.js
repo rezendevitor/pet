@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const Pet = require('./models/Pet'); // Importa o modelo Pet
+
 
 const app = express();
 const PORT = 3000;
@@ -22,71 +22,18 @@ connection.once('open', () => {
   console.log('MongoDB connection established successfully');
 });
 
+// Importar rotas
+const petRoutes = require('./routes/petRoutes');
 
+// Usar rotas
+app.use('/pets', petRoutes);
+app.use('/petprofile', petRoutes);
 
 // Routes
 app.get('/', (req, res) => {
   res.send('API está funcionando!');
 });
 
-// Definir rota para cadastrar pet
-app.post('/petform', (req, res) => {
-    const { name, age, description, breed, gender, type, photoUrl } = req.body;
-  
-    // Aqui você deve salvar os dados recebidos no MongoDB
-    // Exemplo simples sem validações:
-    const pet = new Pet({ name, age, description, breed, gender, type, photoUrl });
-    pet.save()
-      .then(savedPet => {
-        res.status(201).json({ message: 'Pet cadastrado com sucesso', pet: savedPet });
-      })
-      .catch(err => {
-        console.error('Erro ao salvar pet:', err);
-        res.status(500).json({ message: 'Erro ao cadastrar pet', error: err });
-      });
-  });
-  
-// Rota para obter perfil do pet pelo ID
-app.get('/petprofile/:id', (req, res) => {
-    const petId = req.params.id;
-  
-    Pet.findById(petId)
-      .then(pet => {
-        if (!pet) {
-          return res.status(404).json({ message: 'Pet não encontrado' });
-        }
-        res.status(200).json({ pet });
-      })
-      .catch(err => {
-        console.error('Erro ao buscar perfil do pet:', err);
-        res.status(500).json({ message: 'Erro ao buscar perfil do pet', error: err });
-      });
-  });
-  
-// Rota para atualizar um pet
-app.put('/petprofile/:id', (req, res) => {
-  const petId = req.params.id;
-
-  Pet.findByIdAndUpdate(petId, req.body, { new: true })
-    .then(pet => {
-      if (!pet) {
-        return res.status(404).json({ message: 'Pet não encontrado' });
-      }
-      res.status(200).json({ message: 'Pet atualizado com sucesso', pet });
-    })
-    .catch(err => res.status(500).json({ message: 'Erro ao atualizar pet', error: err }));
-});
-
-
-// Rota para obter todos os pets
-app.get('/pets', async (req, res) => {
-  try {
-    const pets = await Pet.find({});
-    res.json(pets);
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
 
 // Start Server
 app.listen(PORT, () => {
