@@ -7,6 +7,8 @@
         <p><strong>Raça:</strong> {{ pet.breed }}</p>
         <p><strong>Idade:</strong> {{ pet.age }}</p>
         <p><strong>Descrição:</strong> {{ pet.description }}</p>
+        <p><strong>Gênero:</strong> {{ pet.gender }}</p>
+        <p><strong>Tipo:</strong> {{ pet.type }}</p>
       </div>
       <button class="edit-btn" @click="openEditModal">Editar</button>
 

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const Pet = require('./models/Pet'); // Importa o modelo Pet
 
 const app = express();
 const PORT = 3000;
@@ -21,17 +22,7 @@ connection.once('open', () => {
   console.log('MongoDB connection established successfully');
 });
 
-// Pet Schema and Model
-const Schema = mongoose.Schema;
-const petSchema = new Schema({
-  name: { type: String, required: true },
-  age: { type: Number, required: true },
-  description: { type: String, required: true },
-  breed: { type: String, required: true },
-  photoUrl: { type: String, required: true },
-});
 
-const Pet = mongoose.model('Pet', petSchema);
 
 // Routes
 app.get('/', (req, res) => {
@@ -40,11 +31,11 @@ app.get('/', (req, res) => {
 
 // Definir rota para cadastrar pet
 app.post('/petform', (req, res) => {
-    const { name, age, description, breed, photoUrl } = req.body;
+    const { name, age, description, breed, gender, type, photoUrl } = req.body;
   
     // Aqui você deve salvar os dados recebidos no MongoDB
     // Exemplo simples sem validações:
-    const pet = new Pet({ name, age, description, breed, photoUrl });
+    const pet = new Pet({ name, age, description, breed, gender, type, photoUrl });
     pet.save()
       .then(savedPet => {
         res.status(201).json({ message: 'Pet cadastrado com sucesso', pet: savedPet });
